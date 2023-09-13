@@ -36,6 +36,7 @@ app.UseCors("CORSPolicy");
 
 app.UseRouting();
 
+// important part and this is the address that clients use to join hub
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();

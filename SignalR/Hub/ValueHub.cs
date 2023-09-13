@@ -7,6 +7,7 @@
     {
         public async Task SendMessage(string message)
         {
+            //"ReceiveMessage" this is method name that in front side called
             await Clients.All.SendAsync("ReceiveMessage", message);
         }
     }
