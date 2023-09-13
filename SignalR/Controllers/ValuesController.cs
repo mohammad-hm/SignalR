@@ -10,6 +10,7 @@ namespace SignalR.Controllers
         [HttpGet]
         public ActionResult<Value> GetValues()
         {
+            counter.userCounter += 1;
             return new Value() { id = 1, valueName = "valueName" };
         }
     }
@@ -19,5 +20,10 @@ namespace SignalR.Controllers
         public int id { get; set; }
         public string? valueName { get; set; }
 
+    }
+
+    public static class counter
+    {
+        public static int userCounter { get; set; }
     }
 }
