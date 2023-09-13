@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
+import Chat from './chat';
 
 function App() {
   const [offers, setOffers] = useState<any[]>([]);
@@ -43,7 +44,10 @@ function App() {
 
   
   return (
+
     <div className="App">
+       <Chat />
+       <hr></hr>
       <h2>Data loaded from the Web API:</h2>
       {offers.length > 0 && (
         <div className="alert alert-warning" role="alert">
@@ -56,6 +60,7 @@ function App() {
       )}
       <h1 style={{display: "block"}}>the count of gtetting info : {valueCount}</h1>
       <hr></hr>
+     
     </div>
   );
 }

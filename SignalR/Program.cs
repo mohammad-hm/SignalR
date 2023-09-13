@@ -40,7 +40,8 @@ app.UseRouting();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
-    endpoints.MapHub<ChatHub>("/value");
+    endpoints.MapHub<ValuHub>("/value");
+    endpoints.MapHub<ChatHubs>("/chat");
 });
 
 

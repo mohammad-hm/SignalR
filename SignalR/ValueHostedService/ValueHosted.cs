@@ -15,9 +15,9 @@
         {
             private readonly ILogger<ValueHosted> _logger;
             private Timer _timer;
-            private readonly IHubContext<ChatHub> _hubContext;
+            private readonly IHubContext<ValuHub> _hubContext;
 
-            public ValueHosted(ILogger<ValueHosted> logger, IHubContext<ChatHub> hubContext)
+            public ValueHosted(ILogger<ValueHosted> logger, IHubContext<ValuHub> hubContext)
             {
                 _logger = logger;
                 _hubContext = hubContext;
