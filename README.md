@@ -9,3 +9,7 @@ so i also put a counter into the ValueController that i have the count of callin
 
 i also create a react project for showing and handling client side , just clone the front side then use 'nmp install', and then "npm start "to run the front side of this proj.
 
+
+
+.sample2: in this proj , is also a simple chat messaging that its 'hub' and its 'controller' created and work well, also i consider some situation when a client use a rude word (here the word is 'asshole'), after repeating 5 times, i send all message that contain this rude word to seperate hub and the hub sends all 5 message to all client and then clear the list of rude message
+
