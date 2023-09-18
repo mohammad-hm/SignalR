@@ -1,18 +1,18 @@
 // Chat.tsx
 import React, { useState, useEffect } from 'react';
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
-import  axios  from 'axios';
+import axios from 'axios';
 
 const Chat: React.FC = () => {
     const [connection, setConnection] = useState<signalR.HubConnection | null>(null);
     const [msgText, setMessages] = useState<{ user: string, message: string }[]>([]);
-    const [user, setUser] = useState<string>("");
-    const [message, setMessage] = useState<string>("");
+    const [userPost, setuserPost] = useState<string>("");
+    const [messagePost, setMessagePost] = useState<string>("");
 
     useEffect(() => {
         console.log("start getting chat ");
         const newConnection = new HubConnectionBuilder()
-        // change it base on backend url
+            // change it base on backend url
             .withUrl("https://localhost:7049/chat")
             .configureLogging(LogLevel.Information)
             .build();
@@ -27,16 +27,17 @@ const Chat: React.FC = () => {
                 console.log("SignalR Connection Error: " + error);
             });
 
-            
-        newConnection.on("ReceiveChatMessage", (user, message) => {
-            console.log("msg when connection is on", message)
-            setMessages([...msgText, { user, message }]);
-        });
-
-
 
         // Clean up the connection when the component unmounts
         return () => {
+            console.log('unmount component and cleanup')
+            // use it here, because each msg show just once
+            newConnection.on('ReceiveChatMessage', (user, message) => {
+                // with this syntax i can save all msg and show together
+                setMessages((prevMessages) => [...prevMessages, { user: user, message: message }]);
+               
+            });
+
             if (newConnection.state === 'Connected') {
                 newConnection.stop();
             }
@@ -44,20 +45,20 @@ const Chat: React.FC = () => {
     }, []);
 
     const sendMessage = async () => {
-        if (message.trim() === "") return;
-        if (user.trim() === "") setUser("Anonymous");
+        if (messagePost.trim() === "") return;
+        if (userPost.trim() === "") setuserPost("Anonymous");
         var postMsg = {
-            "user": user,
-            "msgText": message
+            "user": userPost,
+            "msgText": messagePost
         }
         try {
-            console.log('msg', postMsg)
             await axios.post("https://localhost:7049/api/chat/send", postMsg)
             // await connection?.invoke("SendMessage", user, message);
             // setMessage("");
         } catch (error) {
             console.error("SignalR Send Message Error: " + error);
         }
+        setMessagePost(''); // Clear the input field after sending a message
     };
 
     return (
@@ -66,8 +67,8 @@ const Chat: React.FC = () => {
                 <input
                     type="text"
                     placeholder="User"
-                    value={user}
-                    onChange={(e) => setUser(e.target.value)}
+                    value={userPost}
+                    onChange={(e) => setuserPost(e.target.value)}
                 />
             </div>
             <div>
@@ -83,8 +84,8 @@ const Chat: React.FC = () => {
                 <input
                     type="text"
                     placeholder="Message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    value={messagePost}
+                    onChange={(e) => setMessagePost(e.target.value)}
                 />
                 <button onClick={sendMessage}>Send</button>
             </div>

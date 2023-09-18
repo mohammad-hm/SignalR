@@ -28,9 +28,10 @@ function App() {
       setOffers((prevOffers) => [...prevOffers, result]);
     });
 
-       // Define the "ReceiveMessage" event handler
+    // Define the "ReceiveMessage" event handler - get the count of calling values api
     connection.on('ReceiveMessage', (message: any) => {
-      setValueCount((prevOffers) => [...prevOffers, message]);
+      // just save last msg
+      setValueCount( message);
       console.log(`Received message: ${message}`);
     });
 
@@ -51,14 +52,14 @@ function App() {
       <h2>Data loaded from the Web API:</h2>
       {offers.length > 0 && (
         <div className="alert alert-warning" role="alert">
-          <ul>
+         
             {offers.map((item, index) => (
-              <li key={index}>Offers: {item}</li>
+              <p style={{display: 'block'}} key={index}>Offers: {item}</p>
             ))}
-          </ul>
+         
         </div>
       )}
-      <h1 style={{display: "block"}}>the count of gtetting info : {valueCount}</h1>
+      <h1 style={{display: "block"}}>the count of calling valus api : {valueCount}</h1>
       <hr></hr>
      
     </div>

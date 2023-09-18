@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace SignalR.Controllers
 {
+    // there is an api , that when i calle it , the api counter, count up
     [Route("api/[controller]")]
     [ApiController]
     public class ValuesController : ControllerBase

@@ -16,6 +16,7 @@
         public class ChatController : ControllerBase
         {
             private readonly IHubContext<ChatHubs> _hubContext;
+          
 
             public ChatController(IHubContext<ChatHubs> hubContext)
             {
@@ -26,6 +27,7 @@
             [HttpPost]
             public IActionResult SendRequest([FromBody] MessageDto msg)
             {
+              
                 _hubContext.Clients.All.SendAsync("ReceiveChatMessage", msg.user, msg.msgText);
                 return Ok();
             }
