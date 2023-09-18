@@ -8,6 +8,7 @@ const Chat: React.FC = () => {
     const [msgText, setMessages] = useState<{ user: string, message: string }[]>([]);
     const [userPost, setuserPost] = useState<string>("");
     const [messagePost, setMessagePost] = useState<string>("");
+    const [rudMessage, setRudeMessage] = useState<string[]>([]);
 
     useEffect(() => {
         console.log("start getting chat ");
@@ -35,7 +36,12 @@ const Chat: React.FC = () => {
             newConnection.on('ReceiveChatMessage', (user, message) => {
                 // with this syntax i can save all msg and show together
                 setMessages((prevMessages) => [...prevMessages, { user: user, message: message }]);
-               
+
+            });
+
+            newConnection.on('ReceiveRudChatMessage', (message) => {
+                // with this syntax i can save all msg and show together
+                setRudeMessage( message);
             });
 
             if (newConnection.state === 'Connected') {
@@ -43,6 +49,10 @@ const Chat: React.FC = () => {
             }
         };
     }, []);
+
+    useEffect(() => {
+        console.log('rude msg', rudMessage)
+    }, [rudMessage]);
 
     const sendMessage = async () => {
         if (messagePost.trim() === "") return;
@@ -63,6 +73,12 @@ const Chat: React.FC = () => {
 
     return (
         <div>
+            <div>
+               <h4>here is your rude message:</h4>              
+                    {rudMessage.map((item, index) => (
+                        <p key={index}>{item}</p>
+                    ))}
+            </div>
             <div>
                 <input
                     type="text"
