@@ -50,10 +50,7 @@ const Chat: React.FC = () => {
         };
     }, []);
 
-    useEffect(() => {
-        console.log('rude msg', rudMessage)
-    }, [rudMessage]);
-
+    // use for send message to chating
     const sendMessage = async () => {
         if (messagePost.trim() === "") return;
         if (userPost.trim() === "") setuserPost("Anonymous");
@@ -73,12 +70,15 @@ const Chat: React.FC = () => {
 
     return (
         <div>
+            {/* showing rude msg after 5 time repeating 'asshole' in your msg */}
             <div>
                <h4>here is your rude message:</h4>              
                     {rudMessage.map((item, index) => (
                         <p key={index}>{item}</p>
                     ))}
             </div>
+
+             {/* input for chatting */}
             <div>
                 <input
                     type="text"
